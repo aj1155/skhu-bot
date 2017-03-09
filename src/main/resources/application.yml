@@ -3,8 +3,8 @@ spring.application.name: myarmy
 dashboard.url: http://127.0.0.1
 
 fb:
-  verifytoken: 1234567890
-  accesstoken: EAADzG0rxm4sBAEIoU54b30pb9xmdcjtIEuIDvBvRB7ZCzujZAHHzZB83CIrEJVzVJ6rouuUCpSk2rYYz6zHuZAQO7rZBdbRYeYu3HmHZBD6jNx54w79YYoclMz6ZCZBSfRCwQlgj7mxXxZCehZCmu6FBdZCVR3h4mJMGijDxOZAfjdY9nwZDZD
+  accesstoken: 1234567890
+  verifytoken: EAADzG0rxm4sBAG4rnXWKgRhZAo9341dvnI1Ssa75tMgGZApsJJqvDSMYrZAwK6lyWd2mCZCBlPkXodCgLr1LDpJYkxeJIt9P8WM3UmXA2GIg8DND60rEzE7wM7HiNasaN5DCAOaFp9bwiXy8ZCBepBG88e7xGVdEGIfl4dIhrBwZDZD
 
 
 
