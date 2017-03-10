@@ -18,9 +18,10 @@ public class AnalysisMessageService {
     private ManualRepository manualRepository;
 
     public String analysisMessage(String msg){
-        Optional<Manual> manualOptional = Optional.ofNullable(this.manualRepository.findByMessage(msg));
+        Optional<Manual> manualOptional = Optional.ofNullable(this.manualRepository.findByTitle(msg));
         if(manualOptional.isPresent()) {
             Manual manual = manualOptional.get();
+            System.out.println(manual.getMessage());
             switch (manual.getManualType()){
                 case TEXT:
                     return manual.getMessage();

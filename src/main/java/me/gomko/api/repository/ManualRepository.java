@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ManualRepository extends JpaRepository<Manual,Long> {
-    Manual findByMessage(String msg);
+    Manual findByTitle(String msg);
 }
