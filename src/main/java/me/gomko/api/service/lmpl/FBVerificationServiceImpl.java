@@ -16,7 +16,7 @@ public final class FBVerificationServiceImpl implements FBVerificationService {
 
     private final String fbVerifyToken;
 
-    public FBVerificationServiceImpl(@Value("${fb.verifytoken}") final String fbVerifyToken) {
+    public FBVerificationServiceImpl(@Value("${fb.accesstoken}") final String fbVerifyToken) {
         this.fbVerifyToken = requireNonNull(fbVerifyToken);
     }
 
