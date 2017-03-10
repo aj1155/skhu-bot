@@ -1,4 +1,4 @@
-package me.gomko.api.controller.model.response;
+package me.gomko.api.controller.model;
 
 /**
  * Created by Manki Kim on 2017-02-23.

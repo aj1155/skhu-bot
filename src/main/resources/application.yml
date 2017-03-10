@@ -36,7 +36,7 @@ logging.level:
 
 spring.datasource:
   platform: h2
-  url: jdbc:h2:mem:myarmy;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+  url: jdbc:h2:mem:skhu-bot;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
   username: sa
   initialize: true
 

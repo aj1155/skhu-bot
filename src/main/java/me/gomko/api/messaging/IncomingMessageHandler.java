@@ -1,8 +1,9 @@
 package me.gomko.api.messaging;
 
-import me.gomko.api.model.IncomingMessage;
-import me.gomko.api.model.OutgoingMessage;
-import me.gomko.api.model.json.IncomingMessageData;
+import me.gomko.api.controller.model.IncomingMessage;
+import me.gomko.api.controller.model.OutgoingMessage;
+import me.gomko.api.controller.model.json.IncomingMessageData;
+import me.gomko.api.service.AnalysisMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,48 +19,52 @@ import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
 @Component
-public final class IncomingMessageHandler {
+public class IncomingMessageHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(IncomingMessageHandler.class);
 
-    private final RestTemplate restTemplate;
-    private final String fbAccessToken;
+    private RestTemplate restTemplate;
+    private String fbAccessToken;
 
     @Autowired
-    public IncomingMessageHandler(final RestTemplate restTemplate,
-                                  @Value("${fb.accesstoken}") final String fbAccessToken) {
+    private AnalysisMessageService analysisMessageService;
+
+    @Autowired
+    public IncomingMessageHandler( RestTemplate restTemplate,
+                                  @Value("${fb.accesstoken}") String fbAccessToken) {
         this.restTemplate = requireNonNull(restTemplate);
         this.fbAccessToken = requireNonNull(fbAccessToken);
     }
 
-    public ResponseEntity<?> handleMessage(final IncomingMessageData incomingMessageData) {
+    public ResponseEntity<?> handleMessage(IncomingMessageData incomingMessageData) {
         LOG.info("Handle incoming message data: {}", incomingMessageData.toString());
-        final IncomingMessage incomingMessage = mapIncomingMessage(incomingMessageData);
+        IncomingMessage incomingMessage = mapIncomingMessage(incomingMessageData);
         LOG.info("Mapped incoming message: {}", incomingMessage.toString());
-        final OutgoingMessage outgoingMessage = createOutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText());
+        OutgoingMessage outgoingMessage = createOutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText());
         return sendTextMessage(outgoingMessage);
     }
 
-    private static IncomingMessage mapIncomingMessage(final IncomingMessageData incomingMessageData) {
+    private IncomingMessage mapIncomingMessage(IncomingMessageData incomingMessageData) {
         return new IncomingMessage(incomingMessageData);
     }
 
-    private static OutgoingMessage createOutgoingMessage(final Long recipientId, final String text) {
-        final String outgoingMessageText = createOutgoingMessageText(text);
+    private OutgoingMessage createOutgoingMessage(Long recipientId,String text) {
+        String outgoingMessageText = this.analysisMessageService.analysisMessage(text);
+        //final String outgoingMessageText = createOutgoingMessageText(text);
         return new OutgoingMessage(recipientId, outgoingMessageText);
     }
 
-    private static String createOutgoingMessageText(final String text) {
-        return format("Thank you!\n\nI received your message:\n\n%s", text);
+    private static String createOutgoingMessageText(String text) {
+        return format("%s", text);
     }
 
-    private ResponseEntity<?> sendTextMessage(final OutgoingMessage outgoingMessage) {
+    private ResponseEntity<?> sendTextMessage(OutgoingMessage outgoingMessage) {
         LOG.info("Trying to send message: {}", outgoingMessage);
-        final String url = format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", fbAccessToken);
-        final HttpHeaders headers = new HttpHeaders();
+        String url = format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", fbAccessToken);
+        HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        final HttpEntity<OutgoingMessage> requestEntity = new HttpEntity<>(outgoingMessage, headers);
-        final ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Object.class);
+        HttpEntity<OutgoingMessage> requestEntity = new HttpEntity<>(outgoingMessage, headers);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Object.class);
         LOG.info("Response: body={}, status={}", response.getBody(), response.getStatusCode());
         return response;
     }

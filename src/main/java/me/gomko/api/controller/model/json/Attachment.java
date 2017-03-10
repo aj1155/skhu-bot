@@ -1,4 +1,4 @@
-package me.gomko.api.model.json;
+package me.gomko.api.controller.model.json;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,14 +7,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Map;
 
-public final class Attachment {
+public class Attachment {
 
-    private final String type;
-    private final Map<String, Object> payload;
+    private String type;
+    private Map<String, Object> payload;
 
     @JsonCreator
-    public Attachment(@JsonProperty("type") final String type,
-                      @JsonProperty("payload") final Map<String, Object> payload) {
+    public Attachment(@JsonProperty("type") String type,
+                      @JsonProperty("payload") Map<String, Object> payload) {
         this.type = type;
         this.payload = payload;
     }

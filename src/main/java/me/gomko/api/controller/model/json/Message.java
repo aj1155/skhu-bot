@@ -1,4 +1,4 @@
-package me.gomko.api.model.json;
+package me.gomko.api.controller.model.json;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,19 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public final class Message {
+public class Message {
 
-    private final String mid;
-    private final Integer seq;
-    private final String text;
+    private String mid;
+    private Integer seq;
+    private String text;
 
-    private final List<Attachment> attachments;
+    private List<Attachment> attachments;
 
     @JsonCreator
     public Message(@JsonProperty("mid") String mid,
-                   @JsonProperty("seq") final Integer seq,
-                   @JsonProperty("text") final String text,
-                   @JsonProperty("attachments") final List<Attachment> attachments) {
+                   @JsonProperty("seq")  Integer seq,
+                   @JsonProperty("text") String text,
+                   @JsonProperty("attachments") List<Attachment> attachments) {
         this.mid = mid;
         this.seq = seq;
         this.text = text;

@@ -1,20 +1,20 @@
-package me.gomko.api.model.json;
+package me.gomko.api.controller.model.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public final class Messaging {
+public class Messaging {
 
-    private final MessagingActor sender;
-    private final MessagingActor recipient;
-    private final Long timestamp;
-    private final Message message;
+    private MessagingActor sender;
+    private MessagingActor recipient;
+    private Long timestamp;
+    private Message message;
 
-    public Messaging(@JsonProperty("sender") final MessagingActor sender,
-                     @JsonProperty("recipient") final MessagingActor recipient,
-                     @JsonProperty("timestamp") final Long timestamp,
-                     @JsonProperty("message") final Message message) {
+    public Messaging(@JsonProperty("sender") MessagingActor sender,
+                     @JsonProperty("recipient") MessagingActor recipient,
+                     @JsonProperty("timestamp") Long timestamp,
+                     @JsonProperty("message") Message message) {
         this.sender = sender;
         this.recipient = recipient;
         this.timestamp = timestamp;

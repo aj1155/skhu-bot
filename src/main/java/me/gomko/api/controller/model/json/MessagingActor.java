@@ -1,13 +1,13 @@
-package me.gomko.api.model.json;
+package me.gomko.api.controller.model.json;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public final class MessagingActor {
+public class MessagingActor {
 
-    private final Long id;
+    private Long id;
 
     @JsonCreator
     public MessagingActor(@JsonProperty("id") final Long id) {

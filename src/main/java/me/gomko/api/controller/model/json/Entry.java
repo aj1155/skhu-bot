@@ -1,4 +1,4 @@
-package me.gomko.api.model.json;
+package me.gomko.api.controller.model.json;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,15 +7,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
-public final class Entry {
+public class Entry {
 
-    private final Long id;
-    private final Long time;
-    private final List<Messaging> messaging;
+    private Long id;
+    private Long time;
+    private List<Messaging> messaging;
 
     @JsonCreator
-    public Entry(@JsonProperty("id") final Long id, @JsonProperty("time") final Long time,
-                 @JsonProperty("messaging") final List<Messaging> messaging) {
+    public Entry(@JsonProperty("id") Long id, @JsonProperty("time") Long time,
+                 @JsonProperty("messaging") List<Messaging> messaging) {
         this.id = id;
         this.time = time;
         this.messaging = messaging;

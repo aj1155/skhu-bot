@@ -1,41 +1,38 @@
-package me.gomko.api.model;
+package me.gomko.api.controller.model;
 
-import me.gomko.api.model.json.Entry;
-import me.gomko.api.model.json.IncomingMessageData;
-import me.gomko.api.model.json.Message;
-import me.gomko.api.model.json.Messaging;
+import me.gomko.api.controller.model.json.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class IncomingMessage {
+public class IncomingMessage {
 
-    private final String object;
-    private final Long id;
-    private final Long time;
-    private final Long senderId;
-    private final Long recipientId;
-    private final Long timestamp;
-    private final String mid;
-    private final Integer seq;
-    private final String text;
-    private final List<Attachment> attachments;
+    private String object;
+    private Long id;
+    private Long time;
+    private Long senderId;
+    private Long recipientId;
+    private Long timestamp;
+    private String mid;
+    private Integer seq;
+    private String text;
+    private  List<Attachment> attachments;
 
-    public IncomingMessage(final IncomingMessageData incomingMessageData) {
+    public IncomingMessage(IncomingMessageData incomingMessageData) {
         this.object = incomingMessageData.getObject();
 
-        final Entry entry = incomingMessageData.getEntry().get(0);
+        Entry entry = incomingMessageData.getEntry().get(0);
         this.id = entry.getId();
         this.time = entry.getTime();
 
-        final Messaging messaging = entry.getMessaging().get(0);
+        Messaging messaging = entry.getMessaging().get(0);
         this.senderId = messaging.getSender().getId();
         this.recipientId = messaging.getRecipient().getId();
         this.timestamp = messaging.getTimestamp();
 
-        final Message message = messaging.getMessage();
+        Message message = messaging.getMessage();
         this.mid = message.getMid();
         this.seq = message.getSeq();
         this.text = message.getText();

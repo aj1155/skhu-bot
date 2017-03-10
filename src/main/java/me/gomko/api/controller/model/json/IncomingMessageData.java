@@ -1,4 +1,4 @@
-package me.gomko.api.model.json;
+package me.gomko.api.controller.model.json;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,14 +37,14 @@ import java.util.List;
  * ]
  * }
  */
-public final class IncomingMessageData {
+public class IncomingMessageData {
 
-    private final String object;
-    private final List<Entry> entry;
+    private String object;
+    private List<Entry> entry;
 
     @JsonCreator
-    public IncomingMessageData(@JsonProperty("object") final String object,
-                               @JsonProperty("entry") final List<Entry> entry) {
+    public IncomingMessageData(@JsonProperty("object") String object,
+                               @JsonProperty("entry") List<Entry> entry) {
         this.object = object;
         this.entry = entry;
     }

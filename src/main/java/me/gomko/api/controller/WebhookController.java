@@ -1,7 +1,7 @@
 package me.gomko.api.controller;
 
 import me.gomko.api.messaging.IncomingMessageHandler;
-import me.gomko.api.model.json.IncomingMessageData;
+import me.gomko.api.controller.model.json.IncomingMessageData;
 import me.gomko.api.service.FBVerificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class WebhookController {
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<Void> handleMessage(@RequestBody final IncomingMessageData incomingMessageData) {
+    public ResponseEntity<Void> handleMessage(@RequestBody IncomingMessageData incomingMessageData) {
         LOG.info("Received message data: {}", incomingMessageData);
         final ResponseEntity<?> responseEntity = incomingMessageHandler.handleMessage(incomingMessageData);
         if(!responseEntity.getStatusCode().is2xxSuccessful()) {

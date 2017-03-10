@@ -1,14 +1,14 @@
-package me.gomko.api.model;
+package me.gomko.api.controller.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public final class OutgoingMessage {
+public class OutgoingMessage {
 
-    private final MessagingActor recipient;
-    private final Message message;
+    private MessagingActor recipient;
+    private  Message message;
 
-    public OutgoingMessage(final Long recipientId, final String text) {
+    public OutgoingMessage(Long recipientId,  String text) {
         this.recipient = new MessagingActor(recipientId);
         this.message = new Message(text);
     }
