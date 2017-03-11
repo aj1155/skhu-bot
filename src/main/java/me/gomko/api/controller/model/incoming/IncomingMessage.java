@@ -1,4 +1,4 @@
-package me.gomko.api.controller.model;
+package me.gomko.api.controller.model.incoming;
 
 import me.gomko.api.controller.model.json.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;

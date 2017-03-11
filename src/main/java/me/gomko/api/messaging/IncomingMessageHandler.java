@@ -1,9 +1,12 @@
 package me.gomko.api.messaging;
 
-import me.gomko.api.controller.model.IncomingMessage;
-import me.gomko.api.controller.model.OutgoingMessage;
+import me.gomko.api.controller.model.incoming.IncomingMessage;
+import me.gomko.api.controller.model.outgoing.OutgoingMessage;
 import me.gomko.api.controller.model.json.IncomingMessageData;
+import me.gomko.api.repository.ManualRepository;
 import me.gomko.api.service.AnalysisMessageService;
+import me.gomko.api.util.ManualType;
+import me.gomko.api.util.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,9 @@ public class IncomingMessageHandler {
     private AnalysisMessageService analysisMessageService;
 
     @Autowired
+    private ManualRepository manualRepository;
+
+    @Autowired
     public IncomingMessageHandler( RestTemplate restTemplate,
                                   @Value("${fb.accesstoken}") String fbAccessToken) {
         this.restTemplate = requireNonNull(restTemplate);
@@ -40,7 +46,15 @@ public class IncomingMessageHandler {
         LOG.info("Handle incoming message data: {}", incomingMessageData.toString());
         IncomingMessage incomingMessage = mapIncomingMessage(incomingMessageData);
         LOG.info("Mapped incoming message: {}", incomingMessage.toString());
-        OutgoingMessage outgoingMessage = createOutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText());
+        ManualType type = this.analysisMessageService.analysisType(incomingMessage.getText());
+        switch (type){
+            case TEXT:
+                OutgoingMessage outgoingMessage = createOutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText());
+                return sendTextMessage(outgoingMessage);
+            case BUTTON:
+                break;
+        }
+        OutgoingMessage outgoingMessage = new OutgoingMessage(incomingMessage.getRecipientId(), MessageType.NOMANUAL.toString());
         return sendTextMessage(outgoingMessage);
     }
 
@@ -59,6 +73,17 @@ public class IncomingMessageHandler {
     }
 
     private ResponseEntity<?> sendTextMessage(OutgoingMessage outgoingMessage) {
+        LOG.info("Trying to send message: {}", outgoingMessage);
+        String url = format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", fbAccessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        HttpEntity<OutgoingMessage> requestEntity = new HttpEntity<>(outgoingMessage, headers);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Object.class);
+        LOG.info("Response: body={}, status={}", response.getBody(), response.getStatusCode());
+        return response;
+    }
+
+    private ResponseEntity<?> sendButtonTemplate(OutgoingMessage outgoingMessage){
         LOG.info("Trying to send message: {}", outgoingMessage);
         String url = format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", fbAccessToken);
         HttpHeaders headers = new HttpHeaders();
