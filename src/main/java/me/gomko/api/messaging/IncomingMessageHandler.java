@@ -56,7 +56,7 @@ public class IncomingMessageHandler {
             case BUTTON:
                 break;
         }
-        OutgoingMessage outgoingMessage = new OutgoingMessage(incomingMessage.getRecipientId(), MessageType.NOMANUAL.toString());
+        OutgoingMessage outgoingMessage = new OutgoingMessage(incomingMessage.getRecipientId(), MessageType.NOMANUAL.getMessage());
         return sendTextMessage(outgoingMessage);
     }
 
@@ -80,6 +80,7 @@ public class IncomingMessageHandler {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         HttpEntity<OutgoingMessage> requestEntity = new HttpEntity<>(outgoingMessage, headers);
+        System.out.println(outgoingMessage);
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Object.class);
         LOG.info("Response: body={}, status={}", response.getBody(), response.getStatusCode());
         return response;
