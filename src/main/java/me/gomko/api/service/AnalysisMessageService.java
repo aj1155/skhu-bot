@@ -28,6 +28,8 @@ public class AnalysisMessageService {
 
     public ManualType analysisType(String msg){
         Optional<Manual> manualOptional = Optional.ofNullable(this.manualRepository.findByTitle(msg));
-        return manualOptional.get().getManualType();
+        if(manualOptional.isPresent()){
+            return manualOptional.get().getManualType();
+        }else return ManualType.NOTYPE;
     }
 }

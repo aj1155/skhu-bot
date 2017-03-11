@@ -47,9 +47,11 @@ public class IncomingMessageHandler {
         IncomingMessage incomingMessage = mapIncomingMessage(incomingMessageData);
         LOG.info("Mapped incoming message: {}", incomingMessage.toString());
         ManualType type = this.analysisMessageService.analysisType(incomingMessage.getText());
+        System.out.println(type);
         switch (type){
             case TEXT:
                 OutgoingMessage outgoingMessage = createOutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText());
+                System.out.println(outgoingMessage);
                 return sendTextMessage(outgoingMessage);
             case BUTTON:
                 break;
