@@ -1,13 +1,13 @@
 spring.application.name: myarmy
-
+---
 dashboard.url: http://127.0.0.1
-
+---
 fb:
   appSecret : 22002f5f3e29d32cdca4bbe9229b4241
   verifytoken: 267298547014539|YPhlWZTflmCH8nQt6eBMQnSQUv8
   accesstoken: EAADzG0rxm4sBAG4rnXWKgRhZAo9341dvnI1Ssa75tMgGZApsJJqvDSMYrZAwK6lyWd2mCZCBlPkXodCgLr1LDpJYkxeJIt9P8WM3UmXA2GIg8DND60rEzE7wM7HiNasaN5DCAOaFp9bwiXy8ZCBepBG88e7xGVdEGIfl4dIhrBwZDZD
   serverURL : https://gomko.me/bot/api/v1/webhook
-
+---
 spring.jpa:
   database: MYSQL
   showSql: true
@@ -16,48 +16,27 @@ spring.jpa:
   properties.hibernate.format_sql: true
   properties.hibernate.use_sql_comments: true
 
+---
+logging.level:
+   org.springframework: INFO
+   org.hibernate.SQL: DEBUG
+   org.hibernate.type: TRACE
+   org.hibernate.type.BasicTypeRegistry: WARN
+
 ## DataSource configuration
 #spring.datasource.url: jdbc:mysql://35.162.28.119/llpt-api?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
 #spring.datasource.username: llpt
 #spring.datasource.password: flfflvnt3#
 #spring.datasource.driverClassName: com.mysql.jdbc.Driver
 
-
+---
 spring.datasource:
   platform: h2
   url: jdbc:h2:mem:skhu-bot;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
   username: sa
   initialize: true
-
+---
 spring.h2.console:
   enabled: true
   path : /h2-console
   settings.web-allow-others: true
-
----
-
-spring.profiles: logging-info
-logging:
-  file: logs/application.log
-  level:
-    org.thymeleaf: INFO
-    org.springframework.web: INFO
-    org.hibernate.SQL: INFO
-    org.quartz.core: INFO
-    org.h2.server.web: INFO
-
----
-spring.profiles: logging-debug
-logging:
-  file: logs/application.log
-  level:
-    org.thymeleaf: DEBUG
-    org.springframework.web: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.quartz.core: DEBUG
-    org.h2.server.web: DEBUG
-
----
-spring.profiles: logging-daily
-logging:
-  config: classpath:logback-spring.xml
