@@ -8,9 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SkhuBotApplicationTests {
-
+	
 	@Test
 	public void contextLoads() {
 	}
-
 }
