@@ -3,12 +3,12 @@ package me.gomko.api.controller.model.outgoing;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class OutgoingMessage {
+public final class OutgoingMessage {
 
-    private MessagingActor recipient;
-    private Message message;
+    private final MessagingActor recipient;
+    private final Message message;
 
-    public OutgoingMessage(Long recipientId, String text) {
+    public OutgoingMessage(final Long recipientId, final String text) {
         this.recipient = new MessagingActor(recipientId);
         this.message = new Message(text);
     }
@@ -61,3 +61,4 @@ public class OutgoingMessage {
         }
     }
 }
+

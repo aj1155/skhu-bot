@@ -5,7 +5,7 @@ dashboard.url: http://127.0.0.1
 fb:
   appSecret : 22002f5f3e29d32cdca4bbe9229b4241
   verifytoken: 267298547014539|YPhlWZTflmCH8nQt6eBMQnSQUv8
-  accesstoken: EAADzG0rxm4sBAG4rnXWKgRhZAo9341dvnI1Ssa75tMgGZApsJJqvDSMYrZAwK6lyWd2mCZCBlPkXodCgLr1LDpJYkxeJIt9P8WM3UmXA2GIg8DND60rEzE7wM7HiNasaN5DCAOaFp9bwiXy8ZCBepBG88e7xGVdEGIfl4dIhrBwZDZD
+  accesstoken: EAAGOm7ZCZAvVMBAFPkc1vghShWoZAyRpIUyCS1601to0DXrZCGwKLrRkVc0l5IUJSDx1xvr2lWTZBg3UfGcKZA8sSgQQ726JTOeZBZBjVYJZCsKh0pZC66d9Xknruq6puD4eZAt3HT23X8Bq83FDOzrZCd9XtVmUkxXAP4JWsZBUiToRhogZDZD
   serverURL : https://gomko.me/bot/api/v1/webhook
 ---
 spring.jpa:
@@ -23,18 +23,19 @@ logging.level:
    org.hibernate.type: TRACE
    org.hibernate.type.BasicTypeRegistry: WARN
 
-## DataSource configuration
-#spring.datasource.url: jdbc:mysql://35.162.28.119/llpt-api?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-#spring.datasource.username: llpt
-#spring.datasource.password: flfflvnt3#
-#spring.datasource.driverClassName: com.mysql.jdbc.Driver
+##DataSource configuration
+spring.datasource.url: jdbc:mysql://127.0.0.1/skhu-bot?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+spring.datasource.username: skhu-bot
+spring.datasource.password: 1234
+spring.datasource.driverClassName: com.mysql.jdbc.Driver
+spring.datasource.initialize: true
 
 ---
-spring.datasource:
-  platform: h2
-  url: jdbc:h2:mem:skhu-bot;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
-  username: sa
-  initialize: true
+#spring.datasource:
+  #platform: h2
+  #url: jdbc:h2:mem:skhu-bot;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+  #username: sa
+  #initialize: true
 ---
 spring.h2.console:
   enabled: true

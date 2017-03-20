@@ -36,7 +36,7 @@ public class WebhookController {
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<Void> handleMessage(@RequestBody IncomingMessageData incomingMessageData) {
+    public ResponseEntity<Void> handleMessage(@RequestBody final IncomingMessageData incomingMessageData) {
         LOG.info("Received message data: {}", incomingMessageData);
         final ResponseEntity<?> responseEntity = incomingMessageHandler.handleMessage(incomingMessageData);
         if(!responseEntity.getStatusCode().is2xxSuccessful()) {

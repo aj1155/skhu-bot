@@ -7,6 +7,7 @@ import me.gomko.api.util.MessageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,10 +19,17 @@ public class AnalysisMessageService {
     @Autowired
     private ManualRepository manualRepository;
 
+    @Autowired
+    private KoreanAnalysisService koreanAnalysisService;
+
     public String analysisMessage(String msg){
-        Optional<Manual> manualOptional = Optional.ofNullable(this.manualRepository.findByTitle(msg));
+        List<String> lists = this.koreanAnalysisService.tokenizeKoreanNoun(msg);
+        String title = lists.get(0);
+        lists.remove(0);
+        List<Manual> manuals = this.manualRepository.readByTitleAndMessage(title,lists);
+        Optional<List<Manual>> manualOptional = Optional.ofNullable(this.manualRepository.readByTitleAndMessage(title, lists));
         if(manualOptional.isPresent()) {
-            return manualOptional.get().getMessage();
+            return manualOptional.get().get(0).getMessage();
         }
         return MessageType.NOMANUAL.getMessage();
     }
