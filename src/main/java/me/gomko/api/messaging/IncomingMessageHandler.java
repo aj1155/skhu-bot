@@ -48,15 +48,20 @@ public class IncomingMessageHandler {
         LOG.info("Mapped incoming message: {}", incomingMessage.toString());
         ManualType type = this.analysisMessageService.analysisType(incomingMessage.getText());
         System.out.println(type);
+        OutgoingMessage outgoingMessage;
         switch (type){
             case TEXT:
-                OutgoingMessage outgoingMessage = createOutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText());
+                outgoingMessage = createOutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText());
+                System.out.println(outgoingMessage);
+                return sendTextMessage(outgoingMessage);
+            case AMBIGUOUS:
+                outgoingMessage = new OutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText()+" "+MessageType.AMBIGUOUS.getMessage());
                 System.out.println(outgoingMessage);
                 return sendTextMessage(outgoingMessage);
             case BUTTON:
                 break;
         }
-        OutgoingMessage outgoingMessage = new OutgoingMessage(incomingMessage.getSenderId(), MessageType.NOMANUAL.getMessage());
+        outgoingMessage = new OutgoingMessage(incomingMessage.getSenderId(), MessageType.NOMANUAL.getMessage());
         return sendTextMessage(outgoingMessage);
     }
 
@@ -80,8 +85,9 @@ public class IncomingMessageHandler {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         HttpEntity<OutgoingMessage> requestEntity = new HttpEntity<>(outgoingMessage, headers);
-        System.out.println(requestEntity);
+        System.out.println("request값:"+requestEntity);
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Object.class);
+        //ResponseEntity response = ResponseEntity.ok("okey");
         LOG.info("Response: body={}, status={}", response.getBody(), response.getStatusCode());
         return response;
     }

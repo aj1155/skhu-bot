@@ -3,9 +3,9 @@ spring.application.name: myarmy
 dashboard.url: http://127.0.0.1
 ---
 fb:
-  appSecret : 22002f5f3e29d32cdca4bbe9229b4241
+  appSecret : c9455d3789ade975d13d3401dbe81161
   verifytoken: 267298547014539|YPhlWZTflmCH8nQt6eBMQnSQUv8
-  accesstoken: EAAGOm7ZCZAvVMBAFPkc1vghShWoZAyRpIUyCS1601to0DXrZCGwKLrRkVc0l5IUJSDx1xvr2lWTZBg3UfGcKZA8sSgQQ726JTOeZBZBjVYJZCsKh0pZC66d9Xknruq6puD4eZAt3HT23X8Bq83FDOzrZCd9XtVmUkxXAP4JWsZBUiToRhogZDZD
+  accesstoken: EAAC76hJDh7YBAOyhW2rqkn9uhTCgZCWgFuFImmidWYy9OKDhqNIuSUrPqrMHUfYeuJZCRwYZAMBH1t0R7biVsGsuNo9ENiZB1xGYuYSWM6RzEAKXu2APMXP65o2mGBVxjW4qjFGdIjxodMWSlNlg1ZC7EZARDN5c4VmPy4CIlRgQZDZD
   serverURL : https://gomko.me/bot/api/v1/webhook
 ---
 spring.jpa:

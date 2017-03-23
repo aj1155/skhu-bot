@@ -26,6 +26,8 @@ public class QManual extends EntityPathBase<Manual> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath keyword = createString("keyword");
+
     //inherited
     public final DateTimePath<org.joda.time.DateTime> lastModifiedDate = _super.lastModifiedDate;
 

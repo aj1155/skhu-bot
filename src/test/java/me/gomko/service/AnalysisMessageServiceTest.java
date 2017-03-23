@@ -29,7 +29,7 @@ public class AnalysisMessageServiceTest {
 
     @Test
     public void messageTest(){
-        String reverse = this.analysisMessageService.analysisMessage("졸업 학점 알려줘");
+        String reverse = this.analysisMessageService.analysisMessage("성공회대 가는 길 알려주세요");
         assertThat(reverse).isEqualTo(MessageType.NOMANUAL.getMessage());
     }
 

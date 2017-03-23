@@ -26,6 +26,9 @@ public class Manual extends BaseEntity implements Serializable {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "keyword")
+    private String keyword;
+
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private ManualType manualType;

@@ -21,7 +21,7 @@ public class ManualRepositoryImpl extends QueryDslRepositorySupport implements M
     public List<Manual> readByTitleAndMessage(String title,List<String> list) {
         BooleanBuilder hasAllSkills = new BooleanBuilder();
         list.stream().forEach(data -> {
-            hasAllSkills.and(qManual.message.contains(data));
+            hasAllSkills.and(qManual.keyword.contains(data));
         });
         hasAllSkills.and(qManual.title.contains(title));
         return from(qManual)

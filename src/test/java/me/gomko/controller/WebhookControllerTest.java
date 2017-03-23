@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -28,11 +29,14 @@ public class WebhookControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Value("${fb.accesstoken}")
+    private String token;
+
     @Test
     public void testWebhook() throws Exception {
         MvcResult result = mockMvc.perform(get("/api/v1/webhook")
                 .accept(MediaType.APPLICATION_JSON)
-                 .param("hub.verify_token","EAAGOm7ZCZAvVMBAFPkc1vghShWoZAyRpIUyCS1601to0DXrZCGwKLrRkVc0l5IUJSDx1xvr2lWTZBg3UfGcKZA8sSgQQ726JTOeZBZBjVYJZCsKh0pZC66d9Xknruq6puD4eZAt3HT23X8Bq83FDOzrZCd9XtVmUkxXAP4JWsZBUiToRhogZDZD")
+                 .param("hub.verify_token",token)
                  .param("hub.challenge","asd"))
                 .andExpect(status().isOk())
                 .andReturn();
