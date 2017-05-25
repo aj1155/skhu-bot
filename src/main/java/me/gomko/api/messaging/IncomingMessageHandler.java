@@ -1,6 +1,7 @@
 package me.gomko.api.messaging;
 
 import me.gomko.api.controller.model.incoming.IncomingMessage;
+import me.gomko.api.controller.model.outgoing.OutgoingImage;
 import me.gomko.api.controller.model.outgoing.OutgoingMessage;
 import me.gomko.api.controller.model.json.IncomingMessageData;
 import me.gomko.api.repository.ManualRepository;
@@ -54,6 +55,10 @@ public class IncomingMessageHandler {
                 outgoingMessage = createOutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText());
                 System.out.println(outgoingMessage);
                 return sendTextMessage(outgoingMessage);
+            case IMAGE:
+                OutgoingImage outgoingImage = createOutgoingImage(incomingMessage.getSenderId(),incomingMessage.getText());
+                System.out.println(outgoingImage);
+                return sendTextImage(outgoingImage);
             case AMBIGUOUS:
                 outgoingMessage = new OutgoingMessage(incomingMessage.getSenderId(), incomingMessage.getText()+" "+MessageType.AMBIGUOUS.getMessage());
                 System.out.println(outgoingMessage);
@@ -75,6 +80,12 @@ public class IncomingMessageHandler {
         return new OutgoingMessage(recipientId, outgoingMessageText);
     }
 
+    private OutgoingImage createOutgoingImage(Long recipientId,String text) {
+        String outgoingMessageText = this.analysisMessageService.analysisMessage(text);
+        //final String outgoingMessageText = createOutgoingMessageText(text);
+        return new OutgoingImage(recipientId, outgoingMessageText);
+    }
+
     private static String createOutgoingMessageText(String text) {
         return format("%s", text);
     }
@@ -85,6 +96,19 @@ public class IncomingMessageHandler {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         HttpEntity<OutgoingMessage> requestEntity = new HttpEntity<>(outgoingMessage, headers);
+        System.out.println("request값:"+requestEntity);
+        ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Object.class);
+        //ResponseEntity response = ResponseEntity.ok("okey");
+        LOG.info("Response: body={}, status={}", response.getBody(), response.getStatusCode());
+        return response;
+    }
+
+    private ResponseEntity<?> sendTextImage(OutgoingImage outgoingImage) {
+        LOG.info("Trying to send message: {}", outgoingImage);
+        String url = format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", fbAccessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        HttpEntity<OutgoingImage> requestEntity = new HttpEntity<>(outgoingImage, headers);
         System.out.println("request값:"+requestEntity);
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Object.class);
         //ResponseEntity response = ResponseEntity.ok("okey");
